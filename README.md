@@ -27,6 +27,8 @@ nile install
 
 In this repo I made a small change to `Makefile` to enforce usage of `@pytest.mark.asyncio` and `@pytest.asyncio.fixture` to suppress warnings regarding pytest-asyncio usage.
 
+The tests mostly test the happy paths and only a few unhappy paths. There could definitely be more work done on testing the unhappy paths.
+
 `test  :; pytest tests/ --asyncio-mode=strict`
 
 Run tests:
@@ -37,10 +39,10 @@ make test
 
 ## Acknowledgements
 
-Here are some acknowledgements for people who wrote very helpful resources that I referred to when building this:
+Here are some acknowledgements for people who wrote very helpful resources that I referred to while learning:
 
 [sambarnes](https://twitter.com/__________sam__), for their work on [cairo-dutch](https://github.com/sambarnes/cairo-dutch), used it extensively as a reference
 
-[Perama](https://twitter.com/eth_worm) for their notes on [Cairo](https://perama-v.github.io/cairo/intro/)
+[perama](https://twitter.com/eth_worm) for their notes on [Cairo](https://perama-v.github.io/cairo/intro/)
 
 [RoboTeddy](https://twitter.com/RoboTeddy) for their notes on [Practical StarkNet lessons learned](https://hackmd.io/@RoboTeddy/BJZFu56wF)
