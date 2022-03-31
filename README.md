@@ -1,8 +1,8 @@
 # kickstark 
 
-An ERC20 crowdfund implementation on StarkNet, inspired by [Solidity By Example](https://solidity-by-example.org/app/crowd-fund/) and [sambarnes' cairo-dutch](https://github.com/sambarnes/cairo-dutch). This is not an exact 1-1 implementation.
+An ERC20 crowdfund implementation on StarkNet, inspired by [Solidity By Example](https://solidity-by-example.org/app/crowd-fund/).
 
-_Disclaimer: This code is not intended for production use and has not been audited or tested thoroughly_
+_Disclaimer: This code is not intended for production use and has not been audited or tested thoroughly. It is not an exact 1-1 implementation_
 
 Crowd fund ERC20 token:
 
@@ -34,3 +34,13 @@ Run tests:
 ```
 make test
 ```
+
+## Acknowledgements
+
+Here are some acknowledgements for people who wrote very helpful resources that I referred to when building this:
+
+[sambarnes](https://twitter.com/__________sam__), for their work on [cairo-dutch](https://github.com/sambarnes/cairo-dutch), used it extensively as a reference
+
+[Perama](https://twitter.com/eth_worm) for their notes on [Cairo](https://perama-v.github.io/cairo/intro/)
+
+[RoboTeddy](https://twitter.com/RoboTeddy) for their notes on [Practical StarkNet lessons learned](https://hackmd.io/@RoboTeddy/BJZFu56wF)
