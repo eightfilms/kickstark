@@ -107,8 +107,17 @@ async def test_launch(crowdfund_factory, creator_account_factory, erc20_token_fa
         calldata=[*SOME_AMOUNT, NOW_TIMESTAMP, END_TIMESTAMP, erc20.contract_address],
     )
 
+    await SOME_SIGNER.send_transaction(
+        account=creator_account,
+        to=contract.contract_address,
+        selector_name="launch",
+        calldata=[*SOME_AMOUNT, NOW_TIMESTAMP, END_TIMESTAMP, erc20.contract_address],
+    )
+
     # Check the result of get_balance().
     execution_info = await contract.get_campaign(SOME_ID).call()
+    assert execution_info.result.res.pledged == uint(0)
+    execution_info = await contract.get_campaign(SOME_ID+1).call()
     assert execution_info.result.res.pledged == uint(0)
 
 
