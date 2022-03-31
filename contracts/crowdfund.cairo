@@ -17,7 +17,6 @@ from starkware.cairo.common.uint256 import (
     uint256_lt,
 )
 from starkware.starknet.common.syscalls import (
-    get_block_number,
     get_block_timestamp,
     get_caller_address,
     get_contract_address
@@ -155,8 +154,8 @@ func pledge{
     let (local campaign) = campaigns.read(id)
     let (local current_timestamp) = get_block_timestamp()
     let (pledger) = get_caller_address()
-    let (contract_address) = get_contract_address()
     let (local existing_amount) = pledged_amount.read(pledger, id)
+    let (contract_address) = get_contract_address()
 
     with_attr error_message("campaign has not started"):
         assert_le(campaign.start_at, current_timestamp)
@@ -205,9 +204,9 @@ func unpledge{
     alloc_locals
     let (local campaign) = campaigns.read(0)
     let (caller) = get_caller_address()
+    let (local existing_amount) = pledged_amount.read(caller, id)
     let (contract_address) = get_contract_address() 
-    let (existing_amount) = pledged_amount.read(caller, id)
-    let (local current_timestamp) = get_block_timestamp()
+    let (current_timestamp) = get_block_timestamp()
 
     with_attr error_message("campaign has ended"):
         assert_le(current_timestamp, campaign.end_at) 
@@ -258,9 +257,9 @@ func claim{
         assert_le(current_timestamp, campaign.end_at) 
     end
 
-    let (check_goal_lt_pledged) = uint256_le(campaign.goal, campaign.pledged)
+    let (check_goal_le_pledged) = uint256_le(campaign.goal, campaign.pledged)
     with_attr error_message("pledged amount must have reached goal"):
-        assert check_goal_lt_pledged = 1
+        assert check_goal_le_pledged = 1
     end
 
     with_attr error_message("pledged funds has already been claimed"):
@@ -298,7 +297,7 @@ func refund{
     ):
     alloc_locals
     let (local campaign) = campaigns.read(id)
-    let (local current_timestamp) = get_block_timestamp()
+    let (current_timestamp) = get_block_timestamp()
 
     with_attr error_message("campaign has not ended"):
         assert_le(current_timestamp, campaign.end_at) 
@@ -311,9 +310,7 @@ func refund{
 
     let (claimer) = get_caller_address()
     let (contract_address) = get_contract_address() 
-    let (existing_amount) = pledged_amount.read(claimer, id)
-
-    let (current_block) = get_block_number()
+    let (local existing_amount) = pledged_amount.read(claimer, id)
 
     IERC20.transfer(
         campaign.erc20_address,
