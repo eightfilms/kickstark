@@ -1,4 +1,3 @@
-
 %lang starknet
 
 from starkware.cairo.common.cairo_builtins import HashBuiltin
@@ -44,6 +43,10 @@ func campaigns(id : felt) -> (res : Campaign):
 end
 
 @storage_var
+func num_campaigns() -> (res : felt):
+end
+
+@storage_var
 func pledged_amount(pledger_address : felt, campaign_id : felt) -> (res : Uint256):
 end
 
@@ -74,6 +77,7 @@ func launch{
     ):
     let (creator) = get_caller_address()
     let (current_timestamp) = get_block_timestamp()
+    let (current_campaign_id) = num_campaigns.read()
 
     with_attr error_message("campaign has not started"):
         assert_le(current_timestamp, start_at)
@@ -92,7 +96,11 @@ func launch{
         claimed=FALSE,
         cancelled=FALSE,
     )
-    campaigns.write(0, new_campaign)
+
+    campaigns.write(current_campaign_id, new_campaign)
+    let next_campaign_id = current_campaign_id + 1
+    num_campaigns.write(next_campaign_id)
+
     return ()
 end
 
@@ -127,7 +135,7 @@ func cancel{
         claimed=campaign.claimed,
         cancelled=TRUE,
     )
-    campaigns.write(0, cancelled_campaign)
+    campaigns.write(id, cancelled_campaign)
 
     return ()
 end
@@ -172,7 +180,7 @@ func pledge{
     )
 
     pledged_amount.write(pledger, id, updated_pledge_amount)
-    campaigns.write(0, updated_campaign)
+    campaigns.write(id, updated_campaign)
 
     IERC20.transferFrom(
         campaign.erc20_address,
@@ -218,7 +226,7 @@ func unpledge{
         claimed=FALSE,
         cancelled=FALSE,
     )
-    campaigns.write(0, updated_campaign)
+    campaigns.write(id, updated_campaign)
 
     IERC20.transfer(
         campaign.erc20_address,
