@@ -43,4 +43,4 @@ Here are some acknowledgements for people who wrote very helpful resources that 
 
 [Perama](https://twitter.com/eth_worm) for their notes on [Cairo](https://perama-v.github.io/cairo/intro/)
 
-[RoboTeddy](https://twitter.com/RoboTeddy) for their notes on [Practical StarkNet lessons learned](https://hackmd.io/@RoboTeddy/BJZFu56wF#Overall-experience-so-far)
+[RoboTeddy](https://twitter.com/RoboTeddy) for their notes on [Practical StarkNet lessons learned](https://hackmd.io/@RoboTeddy/BJZFu56wF)
